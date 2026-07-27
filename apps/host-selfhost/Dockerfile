@@ -21,6 +21,12 @@ RUN bun install --frozen-lockfile --production --ignore-scripts --filter @execut
 FROM oven/bun:${EXECUTOR_BUN_VERSION} AS build
 WORKDIR /app
 COPY . .
+RUN apt-get update \
+  && apt-get install --no-install-recommends --yes \
+    build-essential \
+    python3 \
+  && rm -rf /var/lib/apt/lists/*
+ENV PYTHON=/usr/bin/python3
 RUN bun install --frozen-lockfile
 RUN cd apps/host-selfhost && bun run build
 
