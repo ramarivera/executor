@@ -80,7 +80,7 @@ RUN set -eux; \
   curl --fail --silent --show-error --location \
     --output /tmp/SHASUMS256.txt \
     "https://github.com/jdx/mise/releases/download/v${MISE_VERSION}/SHASUMS256.txt"; \
-  mise_sha="$(awk -v archive="${mise_archive}" '$2 == archive || $2 == "*" archive { print $1 }' /tmp/SHASUMS256.txt)"; \
+  mise_sha="$(grep -F "  ./${mise_archive}" /tmp/SHASUMS256.txt | awk '{ print $1 }')"; \
   test -n "${mise_sha}"; \
   printf '%s  %s\n' "${mise_sha}" /tmp/mise.tar.gz | sha256sum --check; \
   mkdir -p /tmp/mise /usr/local/bin /opt/mise; \
