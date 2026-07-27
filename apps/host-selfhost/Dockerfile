@@ -26,10 +26,12 @@ WORKDIR /app
 LABEL org.opencontainers.image.source="https://github.com/UsefulSoftwareCo/executor" \
       org.opencontainers.image.description="Single-container self-hosted Executor" \
       org.opencontainers.image.licenses="MIT"
+ARG EXECUTOR_ALLOW_STDIO_MCP=false
 ENV NODE_ENV=production \
     EXECUTOR_HOST=0.0.0.0 \
     PORT=4788 \
-    EXECUTOR_DATA_DIR=/data
+    EXECUTOR_DATA_DIR=/data \
+    EXECUTOR_ALLOW_STDIO_MCP=${EXECUTOR_ALLOW_STDIO_MCP}
 COPY --from=prod-deps /usr/local/bin/bun /usr/local/bin/bun
 COPY --from=prod-deps /app/.selfhost-runtime /app
 COPY --from=build /app/apps/host-selfhost/dist /app/apps/host-selfhost/dist
