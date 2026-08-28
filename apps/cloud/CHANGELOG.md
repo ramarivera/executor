@@ -1,5 +1,45 @@
 # @executor-js/cloud
 
+## 1.4.64
+
+### Patch Changes
+
+- [#1806](https://github.com/UsefulSoftwareCo/executor/pull/1806) [`93817ed`](https://github.com/UsefulSoftwareCo/executor/commit/93817ed43919934092a4706327f50f6adfd14e47) Thanks [@RhysSullivan](https://github.com/RhysSullivan)! - **Team pricing is per member with unlimited executions**
+
+  The Team plan moves from $150 per organization with a 250,000-execution
+  allowance to $15 per member per month with unlimited executions. The
+  `members` feature is unarchived in `autumn.config.ts` and billed in arrears
+  on the seat count the app reports; Free keeps its 3-member, 100,000-execution
+  shape and Enterprise stays custom with seat usage tracked for visibility.
+
+  Seat counts reconcile from a full WorkOS recount (active members only —
+  pending invites hold a seat for the plan gate but are not billed) after
+  member removal, invitation acceptance, organization creation, and on every
+  login callback, which also picks up joins the app never sees a mutation for
+  (SSO JIT provisioning, join by domain, dashboard edits). Plans that predate
+  seat pricing have no members balance and are skipped, so existing
+  subscriptions keep billing exactly as before on their current plan version.
+
+  The plans page, billing page, and marketing pricing cards now show the
+  per-member price.
+
+- Updated dependencies [[`8324e1e`](https://github.com/UsefulSoftwareCo/executor/commit/8324e1eb8b03965050147309f049bdb52be6fcad), [`85b1955`](https://github.com/UsefulSoftwareCo/executor/commit/85b1955b4d24c332e637e15a025d64455e28a626)]:
+  - @executor-js/plugin-mcp@1.7.0
+  - @executor-js/plugin-openapi@1.7.0
+  - @executor-js/runtime-dynamic-worker@1.4.4
+  - @executor-js/sdk@1.7.0
+  - @executor-js/runtime-quickjs@1.7.0
+  - @executor-js/execution@1.7.0
+  - @executor-js/plugin-graphql@1.7.0
+  - @executor-js/api@1.4.66
+  - @executor-js/vite-plugin@0.0.63
+  - @executor-js/cloudflare@0.0.45
+  - @executor-js/host-mcp@1.4.4
+  - @executor-js/mcp-apps-shell@1.4.14
+  - @executor-js/plugin-toolkits@1.5.38
+  - @executor-js/plugin-workos-vault@0.0.2
+  - @executor-js/react@1.4.66
+
 ## 1.4.63
 
 ### Patch Changes

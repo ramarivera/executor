@@ -1,5 +1,38 @@
 # @executor-js/local
 
+## 1.7.0
+
+### Patch Changes
+
+- [#1458](https://github.com/UsefulSoftwareCo/executor/pull/1458) [`1908dd6`](https://github.com/UsefulSoftwareCo/executor/commit/1908dd6d7611489362d451f7594adca542c13ba1) Thanks [@tylergibbs1](https://github.com/tylergibbs1)! - **An unsupported method probed before `initialize` no longer kills the MCP connection**
+
+  Only `initialize` can open a session, so the streamable-HTTP transport answered every other pre-session method with HTTP 400 + `-32000 Server not initialized`. A 400 is a transport-level failure, so clients dropped the connection instead of treating it as one request failing — a client that opens with an optional probe (MCP 2026-07-28 clients lead with `server/discover`) was disconnected before it could fall back to `initialize`. Over `executor mcp`, which bridges this endpoint to stdio, that closed the client's pipe outright.
+
+  Pre-session dispatch now answers any method other than `initialize` with `-32601 Method not found` on a normal 200, which is a per-request error, so the connection survives and the handshake proceeds. This replaces only that one answer: a POST with a bad `Accept` or `Content-Type` still gets the transport's 406 or 415, and a message that is not a valid JSON-RPC request still gets its parse error.
+
+- Updated dependencies [[`8324e1e`](https://github.com/UsefulSoftwareCo/executor/commit/8324e1eb8b03965050147309f049bdb52be6fcad), [`85b1955`](https://github.com/UsefulSoftwareCo/executor/commit/85b1955b4d24c332e637e15a025d64455e28a626)]:
+  - @executor-js/plugin-mcp@1.7.0
+  - @executor-js/plugin-openapi@1.7.0
+  - @executor-js/plugin-provider-service-split@0.0.17
+  - @executor-js/sdk@1.7.0
+  - @executor-js/runtime-quickjs@1.7.0
+  - @executor-js/execution@1.7.0
+  - @executor-js/config@1.7.0
+  - @executor-js/plugin-file-secrets@1.7.0
+  - @executor-js/plugin-graphql@1.7.0
+  - @executor-js/plugin-keychain@1.7.0
+  - @executor-js/plugin-onepassword@1.7.0
+  - @executor-js/plugin-example@1.7.0
+  - @executor-js/plugin-desktop-settings@1.7.0
+  - @executor-js/app@1.4.4
+  - @executor-js/analytics@0.1.10
+  - @executor-js/api@1.4.66
+  - @executor-js/vite-plugin@0.0.63
+  - @executor-js/host-mcp@1.4.4
+  - @executor-js/mcp-apps-shell@1.4.14
+  - @executor-js/plugin-toolkits@1.5.38
+  - @executor-js/react@1.4.66
+
 ## 1.6.2
 
 ### Patch Changes
